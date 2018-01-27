@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import ui from './uiState';
+import data from './dataState';
 // import api from './apiState';
 
-export default combineReducers({
+export default createStore(combineReducers({
 	ui,
+	data,
 	// api,
-});
+}));

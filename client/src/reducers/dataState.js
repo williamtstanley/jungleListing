@@ -15,8 +15,19 @@ const handlers = {
 };
 
 const initialState = {
-  title: 'Jungle Item List',
-  loading: false,
+  products: [
+    {
+      title: 'Sample Product',
+      description: 'Description of the sample product',
+      asin: 'B002QYW8LW',
+      category: 'sampleCategory',
+      rank: 'sampleRank',
+      dim: {
+        height: 24,
+        width: 13,
+      },
+    },
+  ],
 };
 
 export default (state = initialState, action) => {
