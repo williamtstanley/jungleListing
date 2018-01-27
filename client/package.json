@@ -1,0 +1,19 @@
+{
+  "name": "jungle-listing-client",
+  "version": "0.0.1",
+  "description": "React client for an amazon item details service",
+  "main": "server.js",
+  "repository": {},
+  "author": "W Travis Stanley",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.6.0"
+  },
+  "dependencies": {
+    "webpack": "^3.10.0"
+  }
+}
