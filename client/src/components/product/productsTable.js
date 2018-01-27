@@ -17,7 +17,7 @@ export default class ProductTable extends Component {
               dim,
             }
           ) => (
-            <li>
+            <li key={asin}>
               <span>ASIN: {asin}</span>
               <span>TITLE: {title}</span>
               <span>DESCRIPTION: {description}</span>
