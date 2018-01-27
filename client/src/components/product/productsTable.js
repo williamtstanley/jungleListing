@@ -4,32 +4,49 @@ import { connect } from 'react-redux';
 @connect(({ data }) => ({ products: data.products }))
 export default class ProductTable extends Component {
   render() {
+    const { products } = this.props;
     return (
-      <ul>
-        {
-          this.props.products.map((
+      <table className="products-table">
+        <thead>
+          <tr>
             {
-              asin,
-              title,
-              description,
-              category,
-              rank,
-              dim,
-            }
-          ) => (
-            <li key={asin}>
-              <span>ASIN: {asin}</span>
-              <span>TITLE: {title}</span>
-              <span>DESCRIPTION: {description}</span>
-              <span>CATEGORY: {category}</span>
-              <span>RANK: {rank}</span>
-              <span>HEIGHT: {dim.height}</span>
-              <span>WIDTH: {dim.width}</span>
-            </li>
-          ))
-        }
-      </ul>
+              Object.keys(products[0]).map((key, index) => (
+                <th key={`${key}::${index}`}>{key.toUpperCase()}</th>
+              ))
+            } 
+          </tr>
+          </thead>
+        <tbody>
+          {
+            products.map((
+              {
+                asin,
+                title,
+                description,
+                category,
+                rank,
+                dim,
+              }
+            ) => (
+              <tr key={asin}>
+                <td>{title}</td>
+                <td>{description}</td>
+                <td>{asin}</td>
+                <td>{category}</td>
+                <td>{rank}</td>
+                <td>
+                  <ul>
+                    <li>height: {dim.height}</li>
+                    <li>width: {dim.width}</li>
+                  </ul>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     )
   }
 }
 
+        // <TeamDetailHeader title={this.props.title} /> 

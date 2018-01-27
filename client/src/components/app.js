@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from './statusIndicators/spinner';
 import ProductsTable from './product/productsTable';
+import ProductLookUp from './product/productLookup';
 
 @connect(({ ui }) => {
   return {
@@ -17,6 +18,7 @@ export default class App extends Component {
       : (
         <div>
           <h1 className="title-block">{title}</h1>
+          <ProductLookUp />
           <ProductsTable />
         </div>
       )
