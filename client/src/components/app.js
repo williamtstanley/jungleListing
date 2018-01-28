@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Spinner from './statusIndicators/spinner';
 import ProductsTable from './product/productsTable';
 import ProductLookUp from './product/productLookup';
-import appStyle from './app.css';
+import appStyle from './app.scss';
 
 
 @connect(({ ui }) => {

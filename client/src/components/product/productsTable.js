@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import productsTable from './productsTable.css';
+import productsTable from './productsTable.scss';
 
 @connect(({ data }) => ({ products: data.products }))
 export default class ProductTable extends Component {
