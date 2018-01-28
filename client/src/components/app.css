@@ -1,0 +1,13 @@
+body {
+  background-color: #1C242D;
+  color: #fdfdfd;
+}
+
+.app-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}

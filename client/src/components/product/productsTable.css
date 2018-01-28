@@ -1,0 +1,44 @@
+table {
+  margin: 0 auto;
+  width: 100%;
+}
+
+tr {
+  display: table-row;
+  width: 100%;
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(254,255,255,0.08);
+}
+
+tr:hover {
+  background-color: rgba(0,0,0,0.25);
+}
+
+th {
+  color: white;
+  padding: 5px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+td {
+  text-align: center;
+  white-space: nowrap;
+  color: white;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  padding: 0 5px;
+}
+
+td > ul > li {
+  list-style: none;
+  margin-right: 8px;
+}
+
+td > ul {
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+}
