@@ -10,10 +10,10 @@ import appStyle from './app.scss';
 
 
 @connect(
-  ({ ui }) => ({
+  ({ ui, data }) => ({
     title: ui.title,
-    loading: ui.loading,
     searchText: ui.inputs && ui.inputs.search,
+    loading: !data.products.length,
   }),
   (dispatch) => ({
     textInputChange: (val) => dispatch(uiActions.textInputChange('search', val)),
@@ -21,6 +21,9 @@ import appStyle from './app.scss';
       dispatch(uiActions.toggleModal())
       dispatch(asyncActions.getProduct('search'))
     },
+    getAllProducts: () => {
+      dispatch(asyncActions.getAllProducts())
+    }
   })
 )
 export default class App extends Component {
@@ -30,6 +33,9 @@ export default class App extends Component {
   }
   handleChange(e) {
     this.props.textInputChange(e.target.value)
+  }
+  componentDidMount() {
+    this.props.getAllProducts();
   }
 
   render() {

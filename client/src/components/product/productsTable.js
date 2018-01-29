@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import productsTable from './productsTable.scss';
 
-@connect(({ data }) => ({ products: data.products }))
+@connect(({ data, ui }) => ({
+  products: data.products,
+  productHeadings: ui.productHeadings,
+}))
 export default class ProductTable extends Component {
   render() {
-    const { products } = this.props;
+    const { products, productHeadings } = this.props;
     return (
       <table className="products-table">
         <thead>
           <tr>
             {
-              Object.keys(products[0]).map((key, index) => (
+              this.props.productHeadings.map((key, index) => (
                 <th key={`${key}::${index}`}>{key.toUpperCase()}</th>
               ))
             } 
@@ -30,9 +33,9 @@ export default class ProductTable extends Component {
               }
             ) => (
               <tr key={asin}>
+                <td>{asin}</td>
                 <td>{title}</td>
                 <td>{description}</td>
-                <td>{asin}</td>
                 <td>{category}</td>
                 <td>{rank}</td>
                 <td>

@@ -23,10 +23,17 @@ const handlers = {
 
 const initialState = {
   title: 'Jungle Item List',
-  loading: false,
   inputs: {
     search: '',
   },
+  productHeadings: [
+    'ASIN',
+    'Title',
+    'Description',
+    'Category',
+    'Rank',
+    'Dim',
+  ],
 };
 
 export default (state = initialState, action) => {

@@ -13,6 +13,10 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.databaseDSN[process.env.NODE_ENV || 'development']);
 
 console.log('Applying middleware...');
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    next();
+})
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
