@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9c10e50f4efabea96ac1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "fd0e2afca6b41f2c528a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -27968,11 +27968,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var App = (_dec = (0, _reactRedux.connect)(function (_ref) {
-  var ui = _ref.ui;
+  var ui = _ref.ui,
+      data = _ref.data;
   return {
     title: ui.title,
-    loading: ui.loading,
-    searchText: ui.inputs && ui.inputs.search
+    searchText: ui.inputs && ui.inputs.search,
+    loading: !data.products.length
   };
 }, function (dispatch) {
   return {
@@ -27982,6 +27983,9 @@ var App = (_dec = (0, _reactRedux.connect)(function (_ref) {
     getProduct: function getProduct() {
       dispatch(_uiActions2.default.toggleModal());
       dispatch(_asyncActions2.default.getProduct('search'));
+    },
+    getAllProducts: function getAllProducts() {
+      dispatch(_asyncActions2.default.getAllProducts());
     }
   };
 }), _dec(_class = function (_Component) {
@@ -28003,6 +28007,11 @@ var App = (_dec = (0, _reactRedux.connect)(function (_ref) {
     key: 'handleChange',
     value: function handleChange(e) {
       this.props.textInputChange(e.target.value);
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.getAllProducts();
     }
   }, {
     key: 'render',
@@ -28395,8 +28404,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ProductTable = (_dec = (0, _reactRedux.connect)(function (_ref) {
-  var data = _ref.data;
-  return { products: data.products };
+  var data = _ref.data,
+      ui = _ref.ui;
+  return {
+    products: data.products,
+    productHeadings: ui.productHeadings
+  };
 }), _dec(_class = function (_Component) {
   _inherits(ProductTable, _Component);
 
@@ -28409,7 +28422,9 @@ var ProductTable = (_dec = (0, _reactRedux.connect)(function (_ref) {
   _createClass(ProductTable, [{
     key: 'render',
     value: function render() {
-      var products = this.props.products;
+      var _props = this.props,
+          products = _props.products,
+          productHeadings = _props.productHeadings;
 
       return _react2.default.createElement(
         'table',
@@ -28420,7 +28435,7 @@ var ProductTable = (_dec = (0, _reactRedux.connect)(function (_ref) {
           _react2.default.createElement(
             'tr',
             null,
-            Object.keys(products[0]).map(function (key, index) {
+            this.props.productHeadings.map(function (key, index) {
               return _react2.default.createElement(
                 'th',
                 { key: key + '::' + index },
@@ -28445,17 +28460,17 @@ var ProductTable = (_dec = (0, _reactRedux.connect)(function (_ref) {
               _react2.default.createElement(
                 'td',
                 null,
+                asin
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
                 title
               ),
               _react2.default.createElement(
                 'td',
                 null,
                 description
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                asin
               ),
               _react2.default.createElement(
                 'td',
@@ -28528,8 +28543,7 @@ __webpack_require__("./src/components/statusIndicators/spinner.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Spinner = function Spinner(_ref) {
-  var loading = _ref.loading;
+var Spinner = function Spinner() {
   return _react2.default.createElement(
     'div',
     { className: 'sk-circle' },
@@ -28730,7 +28744,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
   TOGGLE_MODAL: 'TOGGLE_MODAL',
   TEXT_INPUT_CHANGE: 'TEXT_INPUT_CHANGE',
-  ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT'
+  ADD_NEW_PRODUCT: 'ADD_NEW_PRODUCT',
+  ADD_ALL_PRODUCTS: 'ADD_ALL_PRODUCTS'
 };
 
 /***/ }),
@@ -28751,7 +28766,8 @@ var _actionConstants2 = _interopRequireDefault(_actionConstants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ADD_NEW_PRODUCT = _actionConstants2.default.ADD_NEW_PRODUCT;
+var ADD_NEW_PRODUCT = _actionConstants2.default.ADD_NEW_PRODUCT,
+    ADD_ALL_PRODUCTS = _actionConstants2.default.ADD_ALL_PRODUCTS;
 
 // this needs to be async actions stuff...
 
@@ -28760,32 +28776,30 @@ exports.default = {
     return function (dispatch, getState) {
       var asin = getState().ui.inputs[fieldName];
 
-      return fetch('/localhost:9999/products/' + asin).then(function (res) {
+      return fetch('http://localhost:56721/products/' + asin).then(function (res) {
         if (!res.ok) {}
-
+        console.log('res', res);
         return res.json().then(function (result) {
           dispatch({
             type: ADD_NEW_PRODUCT,
             payload: result
           });
         });
-      }).catch(function () {
-        // this until backend to finish tests
-        dispatch({
-          type: ADD_NEW_PRODUCT,
-          payload: {
-            title: 'Sample Product',
-            description: 'Description of the sample product',
-            asin: asin,
-            category: 'sampleCategory',
-            rank: 'sampleRank',
-            dim: {
-              height: 24,
-              width: 13
-            }
-          }
+      }).catch(console.log);
+    };
+  },
+  getAllProducts: function getAllProducts() {
+    return function (dispatch, getState) {
+      return fetch('http://localhost:56721/products').then(function (res) {
+        if (!res.ok) {}
+        console.log('res', res);
+        return res.json().then(function (result) {
+          dispatch({
+            type: ADD_ALL_PRODUCTS,
+            payload: result
+          });
         });
-      });
+      }).catch(console.log);
     };
   }
 };
@@ -28822,33 +28836,20 @@ var merge = function merge() {
   return Object.assign.apply(Object, [{}].concat(args));
 };
 
-var CREATE_NOTE = _actionConstants2.default.CREATE_NOTE,
-    UPDATE_NOTE = _actionConstants2.default.UPDATE_NOTE,
-    ADD_NEW_PRODUCT = _actionConstants2.default.ADD_NEW_PRODUCT;
+var ADD_NEW_PRODUCT = _actionConstants2.default.ADD_NEW_PRODUCT,
+    ADD_ALL_PRODUCTS = _actionConstants2.default.ADD_ALL_PRODUCTS;
 
 
-var handlers = (_handlers = {}, _defineProperty(_handlers, CREATE_NOTE, function (state, action) {
-  return; // some new state with new note
-}), _defineProperty(_handlers, UPDATE_NOTE, function (state, action) {
-  return; // some new state with note updated
-}), _defineProperty(_handlers, ADD_NEW_PRODUCT, function (state, action) {
+var handlers = (_handlers = {}, _defineProperty(_handlers, ADD_NEW_PRODUCT, function (state, action) {
   return merge(state, {
     products: [action.payload].concat(_toConsumableArray(state.products))
   });
+}), _defineProperty(_handlers, ADD_ALL_PRODUCTS, function (state, action) {
+  return merge(state, { products: action.payload });
 }), _handlers);
 
 var initialState = {
-  products: [{
-    title: 'Sample Product',
-    description: 'Description of the sample product',
-    asin: 'B002QYW8LW',
-    category: 'sampleCategory',
-    rank: 'sampleRank',
-    dim: {
-      height: 24,
-      width: 13
-    }
-  }]
+  products: []
 };
 
 exports.default = function () {
@@ -28980,10 +28981,10 @@ var handlers = (_handlers = {}, _defineProperty(_handlers, TOGGLE_MODAL, functio
 
 var initialState = {
   title: 'Jungle Item List',
-  loading: false,
   inputs: {
     search: ''
-  }
+  },
+  productHeadings: ['ASIN', 'Title', 'Description', 'Category', 'Rank', 'Dim']
 };
 
 exports.default = function () {

@@ -48,7 +48,6 @@
   },
   "scripts": {
     "server:dev": "webpack-dev-server --progress --colors --config ./webpack.config.js",
-    "server:prod": "./node_modules/.bin/http-server ./dist -a localhost -p 8000 -o",
-    "build": "webpack"
+    "server:prod": "webpack && ./node_modules/.bin/http-server ./dist -a localhost -p 8000 -o -c-1"
   }
 }
