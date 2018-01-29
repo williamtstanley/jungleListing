@@ -1,0 +1,5 @@
+{
+	"databaseDSN": {
+		"development": "mongodb://127.0.0.1/pay-processor"
+	}
+}

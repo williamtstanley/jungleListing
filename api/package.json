@@ -1,0 +1,16 @@
+{
+  "name": "junglelistapi",
+  "version": "0.0.1",
+  "description": "The api service for jungle list",
+  "main": "server.js",
+  "repository": {},
+  "author": "W Travis Stanley",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "mongoose": "^5.0.2"
+  }
+}
