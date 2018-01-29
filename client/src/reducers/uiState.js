@@ -17,6 +17,7 @@ const handlers = {
 const initialState = {
   title: 'Jungle Item List',
   loading: false,
+  modals: {},
 };
 
 export default (state = initialState, action) => {

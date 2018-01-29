@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import CirclePlus from '../icons/circlePlus';
 import Style from './productLookup.scss'
 import Tooltip from '../tooltip/tooltip';
 
+@connect(undefined, (dispatch) => ({
+  handleClick: () => dispatch({
+    type: 'OPEN_MODAL',
+    payload: 'addItem',
+  })
+}))
 export default class ProductLookup extends Component {
+  handleClick() {
+    this.props.handleClick();
+  }
+
   render() {
     return (
       <Tooltip
@@ -11,7 +22,7 @@ export default class ProductLookup extends Component {
         className="circleplus__addAction"
       >
         <CirclePlus
-          onClick={() => console.log('clicked')}
+          onClick={() => this.handleClick()}
         />  
       </Tooltip>
     );
