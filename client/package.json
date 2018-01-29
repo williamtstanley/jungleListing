@@ -39,7 +39,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "express": "^4.16.2",
+    "http-server": "^0.11.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
@@ -48,6 +48,7 @@
   },
   "scripts": {
     "server:dev": "webpack-dev-server --progress --colors --config ./webpack.config.js",
+    "server:prod": "./node_modules/.bin/http-server ./dist -a localhost -p 8000 -o",
     "build": "webpack"
   }
 }
