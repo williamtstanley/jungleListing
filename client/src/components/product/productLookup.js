@@ -6,8 +6,7 @@ import Tooltip from '../tooltip/tooltip';
 
 @connect(undefined, (dispatch) => ({
   handleClick: () => dispatch({
-    type: 'OPEN_MODAL',
-    payload: 'addItem',
+    type: 'TOGGLE_MODAL',
   })
 }))
 export default class ProductLookup extends Component {

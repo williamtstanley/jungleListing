@@ -1,23 +1,32 @@
 import actionConstants from './actionConstants';
+const merge = (...args) => Object.assign({}, ...args);
 
 const {
-  CREATE_NOTE,
-  UPDATE_NOTE,
+  TOGGLE_MODAL,
+  TEXT_INPUT_CHANGE,
 } = actionConstants;
 
 const handlers = {
-  [CREATE_NOTE]: (state, action) => {
-    return // some new state with new note
+  [TOGGLE_MODAL]: (state, action) => {
+    return merge(state, {
+      modalOpen: !state.modalOpen,
+    })  
   },
-  [UPDATE_NOTE]: (state, action) => {
-    return // some new state with note updated
+  [TEXT_INPUT_CHANGE]: (state, action) => {
+    return merge(state, {
+      inputs: merge(state.inputs, {
+        [action.payload.fieldName]: action.payload.value,
+      }),
+    });
   }
 };
 
 const initialState = {
   title: 'Jungle Item List',
   loading: false,
-  modals: {},
+  inputs: {
+    search: '',
+  },
 };
 
 export default (state = initialState, action) => {

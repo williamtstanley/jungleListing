@@ -9,6 +9,5 @@ const CirclePlus = ({ style, stroke, fill, ...props}) => (
     </g>      
   </svg>
 );
-  
 
 export default CirclePlus;

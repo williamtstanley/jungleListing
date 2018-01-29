@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import uiActions from '../../reducers/uiActions';
+import CircleClose from '../icons/circleClose';
 import Style from './modal.scss';
 
 @connect(
-  ({ ui }, ownProps) => ({
-    isOpen: ui.modals[ownProps.name],
-  }),
+  ({ ui }, ownProps) => {
+    return {
+      isOpen: ui.modalOpen,
+    }
+  },
   (dispatch, ownProps) => ({
-    // onClose: () => dispatch(uiActions.toggleModal(ownProps.name))
+    onClose: () => dispatch(uiActions.toggleModal())
   })
 )
 export default class Modal extends Component {
@@ -17,7 +21,7 @@ export default class Modal extends Component {
     }
   }
   render() {
-    // if (!this.props.isOpen) return null;
+    if (!this.props.isOpen) return null;
 
     return (
       <div
@@ -25,13 +29,10 @@ export default class Modal extends Component {
         onClick={(e) => this.handleExitClick(e)}
       >
         <div className='modal__container'>
-          <div className="header">
-            <i 
-              onClick={this.props.onClose}
-              className="fa fa-times close-icon"
-            >
-            </i>
-          </div>
+          <CircleClose
+            className="close__button"
+            onClick={() => this.props.onClose()}
+          />
           {this.props.children}
         </div>
       </div>

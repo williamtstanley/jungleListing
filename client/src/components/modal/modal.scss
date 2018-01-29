@@ -1,32 +1,37 @@
 // The gray background
 .modal__backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  box-sizing: border-box;
   position: fixed;
-  z-index: 1;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
-  background-color: rgba(0,0,0,0.8);
-  padding: 20px;
-
+  z-index: 1000;
+  padding: 0;
+  overflow: auto;
+  
   // The modal "window"
   .modal__container {
-    background-color: #2E3740; 
+    width: 500px;
+    position: relative;
+    background: #fff;
+    width: 500px;
+    box-sizing: border-box;
+    position: relative;
+    left: 50%;
+    padding: 50px;
     border-radius: 5px;
-    max-width: 80%;
-    min-height: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    .header {
-      display: flex;
-      justify-content: flex-end;
-      .close-icon {
-        position: absolute;
-        z-index: 1;
-        color: white;
-        font-size: 1.35em;
-        cursor: pointer;
-      }
+    margin: 10% 0;
+    overflow: visible;
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    
+    .close__button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
     }
   }
 }
