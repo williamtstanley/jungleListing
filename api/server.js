@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 const config = require('./config/default');
 const router = require('./routes');
 const mongoose = require('mongoose');
@@ -16,7 +17,8 @@ console.log('Applying middleware...');
 app.use((req, res, next) => {
     res.append('Access-Control-Allow-Origin', ['*']);
     next();
-})
+});
+app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
